@@ -7,7 +7,7 @@ Python 多智能体项目。
 ### 1. 创建虚拟环境
 
 ```bash
-python -m venv .env
+python -m venv .venv
 ```
 
 ### 2. 激活虚拟环境
@@ -15,19 +15,19 @@ python -m venv .env
 **Windows (PowerShell):**
 
 ```powershell
-.env\Scripts\Activate.ps1
+.venv\Scripts\Activate.ps1
 ```
 
 **Windows (CMD):**
 
 ```
-.env\Scripts\activate.bat
+.venv\Scripts\activate.bat
 ```
 
 **Linux / macOS:**
 
 ```bash
-source .env/bin/activate
+source .venv/bin/activate
 ```
 
 ### 3. 安装依赖
