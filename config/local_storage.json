@@ -1,0 +1,17 @@
+{
+    "work_directory": "D:/company/workspace",
+    "tasks": [
+        {
+            "id": 1,
+            "name": "TASK-001",
+            "stage": 3,
+            "work_directory": "D:/company/workspace"
+        },
+        {
+            "id": 2,
+            "name": "TASK-002",
+            "stage": 0,
+            "work_directory": "D:/company/workspace"
+        }
+    ]
+}

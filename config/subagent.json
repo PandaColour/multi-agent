@@ -1,0 +1,39 @@
+{
+  "subagents": [
+    {
+      "name": "cloudbank-ags",
+      "workspace": "D:/company/workspace/cloudbank/cloudbank-ags",
+      "prompt_path": "subagents/prompts/cloudbank_ags.md"
+    },
+    {
+      "name": "cloudbank-api",
+      "workspace": "D:/company/workspace/cloudbank/cloudbank-api",
+      "prompt_path": "subagents/prompts/cloudbank_api.md"
+    },
+    {
+      "name": "cloudbank-common",
+      "workspace": "D:/company/workspace/cloudbank/cloudbank-common",
+      "prompt_path": "subagents/prompts/cloudbank-common.md"
+    },
+    {
+      "name": "cloudbank-lcs",
+      "workspace": "D:/company/workspace/cloudbank/cloudbank-lcs",
+      "prompt_path": "subagents/prompts/cloudbank-lcs.md"
+    },
+    {
+      "name": "cloudbank-ods",
+      "workspace": "D:/company/workspace/cloudbank/cloudbank-ods",
+      "prompt_path": "subagents/prompts/cloudbank-ods.md"
+    },
+    {
+      "name": "cloudbank-pcs",
+      "workspace": "D:/company/workspace/cloudbank/cloudbank-pcs",
+      "prompt_path": "subagents/prompts/cloudbank-pcs.md"
+    },
+    {
+      "name": "cloudbank-partner",
+      "workspace": "D:/company/workspace/qifu-hkbank/cloudbank",
+      "prompt_path": "subagents/prompts/cloudbank-partner.md"
+    }
+  ]
+}

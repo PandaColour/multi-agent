@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(claude-api)",
+      "Bash(pip show:*)",
+      "Bash(python:*)",
+      "Bash(.venv/Scripts/python.exe -c \"import sys; print\\(sys.version\\)\")",
+      "Bash(.venv/Scripts/python.exe -c \"import PyQt6; print\\(PyQt6.__version__\\)\")",
+      "Bash(uv pip:*)",
+      "Bash(.venv/Scripts/python.exe -c \"from PyQt6.QtWidgets import QApplication; print\\(''PyQt6 OK''\\)\")",
+      "Bash(.venv/Scripts/python.exe -c \":*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(dir /s /b \"D:\\\\company\\\\workspace\\\\cloudbank\\\\memory-sdk\")",
+      "Bash(where python:*)",
+      "Bash(dir D:\\\\github\\\\multi-agent\\\\src\\\\qt:*)",
+      "Bash(timeout 5)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(echo \"App started, PID: $!\")",
+      "Bash(cat requirements.txt)",
+      "Bash(cat pyproject.toml)",
+      "Bash(.venv/Scripts/python.exe -c \"import claude_agent_sdk; print\\(claude_agent_sdk.__version__\\)\")",
+      "Bash(.venv/Scripts/python.exe -c \"import PyQt6; print\\('PyQt6 OK'\\)\")",
+      "Bash(.venv/Scripts/python.exe -c ':*)",
+      "Bash(npm list *)",
+      "Read(//c/Users/zhangjiaxu-jk/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/**)",
+      "Bash(node install.cjs)",
+      "Bash(npm install *)",
+      "Bash(claude *)",
+      "Bash(npm cache *)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "Bash(D:/github/multi-agent/.venv/Lib/site-packages/claude_agent_sdk/_bundled/claude.exe *)",
+      "Bash(adk --help)",
+      "WebSearch"
+    ]
+  }
+}
