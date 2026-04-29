@@ -72,6 +72,25 @@ AuthFillJob.backfill() 调用链路（具体行号）：
 
 **推荐策略**：第一阶段用"接受重复查询"上线并埋点监控，如性能有问题再升级方案。
 
+## ODS 报表执行器架构
+
+cloudbank-ods 模块包含独立的报表执行器体系：
+
+- **ReportExecutor** 接口定义（`cloudbank-ods` 模块）
+- **ReportExecutorService** 实现类负责调度执行
+- **standard.report 包**下包含具体报表执行器：
+  - `LoanAmtStatisticsReportExecutor`：贷款金额统计报表
+  - `LoanBalStatisticsReportExecutor`：贷款余额统计报表
+  - `LoanBalanceDailyReportExecutor`：贷款余额日报表
+- 各执行器通过 `OdsExecutorConfiguration` 以 `@ConditionalOnProperty` 方式按需注册启用
+
+## 报表实体职责分离
+
+核心模块的报表实体与 partner 层 ODS 接入实体**职责完全分离**：
+- **核心报表实体**（如 `RGzRepayDetailEntity`）：服务于内部报表生成（`GzRepayDetailReportExecutor`）
+- **partner ODS 实体**（如 `CHkRepayDetailEntity`）：服务于银行文件解析落库，使用 `@LineColumn` 注解映射文件列
+- 两者无继承关系，数据流独立
+
 ## 防重处理模式
 
 定时任务拾取记录后，如果需要跳过某些记录但不改变其状态，需防止无限重处理循环。常用方案：

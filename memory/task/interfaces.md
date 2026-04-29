@@ -46,4 +46,10 @@
 | HkRepayNotifyJob | 还款通知定时任务 | 继承 AbstractAsyncJssTriggerClientService |
 | ChangeDefaultBankcardJob | 换卡定时任务 | 继承 AbstractAsyncJssTriggerClientService |
 
+### partner 层还款明细查询
+
+| 方法 | 所属类 | 说明 |
+|------|--------|------|
+| queryRepayDetailList() | PartnerRepayServiceImpl | 返回 `usePartnerService=false`，表示**不走机构层自定义逻辑**，完全由核心 SDK 自行处理 |
+
 **partner 层接口特性**：均为核心模块被动调用的扩展点/实现，不包含对核心 Job（AuthFillJob/LoanBackFillJob）的覆写或引用

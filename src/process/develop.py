@@ -80,6 +80,13 @@ class Develop(AbstractProcess):
         else:
             await super().chat(context)
 
+    # ── close 覆写：确保子代理连接被清理 ─────────────────────────────────────
+
+    async def close(self) -> None:
+        """关闭流程，断开所有子代理连接"""
+        await self._subagent_manager.disconnect_all()
+        await super().close()
+
     # ── 自动开发流程 ────────────────────────────────────────────────────────
 
     async def _auto_develop(self) -> None:
@@ -135,6 +142,9 @@ class Develop(AbstractProcess):
 
         # 汇总写入 develop-report.md
         await self._write_report()
+
+        # 开发完成，断开所有子代理连接
+        await self._subagent_manager.disconnect_all()
 
         self._log("✅", "[Develop]", "开发阶段全部完成，请查看 develop-report.md")
 

@@ -116,7 +116,8 @@ class AbstractProcess(ABC):
                 elif cmd[0] == _CMD_CLOSE:
                     # 如果用户输入次数大于1，先发送记忆整理提示
                     if self._input_counter > 1:
-                        memory_prompt = "结合我们的对话,为了一会更好的完成此类任务,整理你的记忆,允许根据需要增加记忆文件"
+                        custom_prompt = cmd[2] if len(cmd) > 2 else None
+                        memory_prompt = custom_prompt or "结合我们的对话,为了一会更好的完成此类任务,整理你的记忆,允许根据需要增加记忆文件"
                         self._log("📝", "[Memory]", "正在整理记忆...")
                         await self._client.query(memory_prompt)
                         await self._process_response()
@@ -192,15 +193,19 @@ class AbstractProcess(ABC):
             self._log("❌", "[Error]", "请求超时（600s），CLI 子进程可能已崩溃")
             raise RuntimeError("Claude CLI 请求超时，请重试")
 
-    async def close(self) -> None:
-        """关闭流程"""
+    async def close(self, memory_prompt: str = None) -> None:
+        """关闭流程
+
+        Args:
+            memory_prompt: 自定义记忆整理提示词，None 则使用默认提示词
+        """
         if self._cmd_queue is None:
             return
 
         loop = asyncio.get_running_loop()
         future = loop.create_future()
 
-        await self._cmd_queue.put((_CMD_CLOSE, future))
+        await self._cmd_queue.put((_CMD_CLOSE, future, memory_prompt))
 
         # 等待 close 完成，超时则取消 worker
         try:

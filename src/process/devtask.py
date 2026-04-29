@@ -105,17 +105,12 @@ class DevTask(AbstractProcess):
 
     async def close(self) -> None:
         """关闭流程，发送任务拆分阶段记忆整理后断开"""
-        # 先通过 chat 让 client 整理记忆
-        if self._cmd_queue is not None and self._input_counter > 0:
-            try:
-                self._log("📝", "[Memory]", "任务拆分结束，整理记忆…")
-                memory_prompt = "任务拆分结束，根据对话整理记忆，将任务拆分过程中发现的系统知识沉淀到记忆文件中"
-                await self.chat(memory_prompt)
-            except Exception as e:
-                self._log("⚠️", "[Memory]", f"记忆整理失败: {e}")
+        # 断开所有子代理连接
+        await self._subagent_manager.disconnect_all()
 
-        # 调用父类 close（不会再触发一次记忆整理，因为 _input_counter 条件）
-        await super().close()
+        # 传递阶段特定的记忆整理提示词，由父类在 _CMD_CLOSE 中执行
+        memory_prompt = "任务拆分结束，根据对话整理记忆，将任务拆分过程中发现的系统知识沉淀到记忆文件中"
+        await super().close(memory_prompt=memory_prompt)
 
     # ── 自动复核流程 ────────────────────────────────────────────────────────
 
@@ -190,6 +185,9 @@ class DevTask(AbstractProcess):
             await self._refine_task_split()
         else:
             self._log("⚠️", "[Task]", "未收到任何复核反馈，跳过重新拆分")
+
+        # 复核完成，断开所有子代理连接（后续不再需要）
+        await self._subagent_manager.disconnect_all()
 
         self._log("✅", "[Task]", "任务拆分流程全部完成，请查看最终结果")
 

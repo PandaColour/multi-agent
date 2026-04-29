@@ -46,3 +46,13 @@
   - PartnerSignServiceImpl.uploadAgreement() 是上传层面的扩展点，被核心模块被动调用，与业务决策逻辑无关
   - partner 层 Job 仅有 HkRepayNotifyJob（还款通知）和 ChangeDefaultBankcardJob（换卡），均继承 AbstractAsyncJssTriggerClientService，与核心 AuthFillJob/LoanBackFillJob 无关联
   - partner 层不存在对 AuthFillJob 或授信合同上传逻辑的自定义覆写
+
+### partner 层还款明细相关代码（与核心报表独立）
+
+| 类/接口 | 职责 | 与核心模块关系 |
+|---------|------|--------------|
+| **CHkRepayDetailEntity** | 港行 ODS 数据接入实体，使用 `@LineColumn` 注解标识文件列映射，字段对应银行下发文件格式（`loanNo`、`repayNo`、`rpyTerm`、`rpyPrin`、`rpyInt` 等） | **完全独立**，并非对 `RGzRepayDetailEntity` 的继承或扩展，不流入核心报表流程 |
+| **HkRepayDetailSnapshotExecutor** | 港行 ODS 快照执行器，继承 `AbstractDataFileSnapshotExecutor` | 与核心报表执行器 `GzRepayDetailReportExecutor` **无任何关联** |
+| **PartnerRepayServiceImpl.queryRepayDetailList()** | 机构层还款明细查询接口 | 返回 `usePartnerService=false`，**不走机构层自定义逻辑**，完全由核心 SDK 自行处理 |
+
+**重要结论**：核心模块的还款明细报表（`GzRepayDetailReportExecutor` / `RGzRepayDetailEntity`）变更，**不影响 partner 层**。港行还款明细数据通过独立 ODS 通道接入，不经过核心报表生成流程。
